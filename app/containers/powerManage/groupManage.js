@@ -4,6 +4,7 @@ import { Row, Col } from 'antd';
 
 //引入组件
 import FlexBox from '../../components/flexbox' 
+import SelectSearch from '../../components/select' 
 
 class GroupManage extends React.Component {
     constructor(props, context) {
@@ -11,7 +12,10 @@ class GroupManage extends React.Component {
     }
     render() {
         let flexContent = 
-              <div style={felxContent}>
+        <div style={felxContent}>
+            <Row gutter={25}>
+                <Col span={6}><SelectSearch/></Col>
+            </Row>
         </div>
         const container = {
             width: '100%',
