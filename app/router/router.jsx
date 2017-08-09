@@ -15,7 +15,6 @@ export default class Routers extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-
         }
     }
     static contextTypes = {
@@ -30,7 +29,7 @@ export default class Routers extends Component {
                     }}>
                 </Route>
                 <Route path='/home' component={Home}>
-                    <IndexRoute  component={GroupManage}/>
+                    <IndexRoute component={GroupManage} />
                     <Route path='rolemanage' component={RoleManage} />
                     <Route path='rulemanage' component={RuleManage} />
                     <Route path='usermanage' component={UserManage} />
