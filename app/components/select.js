@@ -26,11 +26,10 @@ class SelectSearch extends React.Component {
         console.log(`selected ${value}`);
     }
     render() {
-            {console.log(this.props.optionArr)}        
         return (
-            <Row gutter={15}>
-                <Col span={8}><span>{this.props.label}</span></Col>
-                <Col span={16} >
+            <Row gutter={15} type="flex" justify="center" align="middle" style={{height:'48px'}}>
+                <Col span={10}><span style={{display:'inline-block',width:'100%',textAlign:'center',fontSize:'14px',color:'#929aab'}}>{this.props.label}</span></Col>
+                <Col span={14} >
                     <Select
                            style={{width:'100%'}}
                             showSearch
@@ -54,8 +53,3 @@ class SelectSearch extends React.Component {
     }
 }
 module.exports = SelectSearch
-//     < Select
-
-//                             >
-
-//                              </Select >

@@ -1,0 +1,11 @@
+.btnSearch{
+    background: #c3a279;
+    color: white;
+    border:none;
+}
+
+.btnSearch:hover, .btnSearch:focus, .btnSearch:active, btnSearch.active{
+    background: #ba8e6e;
+    color: white;
+    border:none;    
+}

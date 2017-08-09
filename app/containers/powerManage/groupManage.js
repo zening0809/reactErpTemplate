@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { Row, Col } from 'antd';
+import { Row, Col, Button} from 'antd';
 
 //引入组件
 import FlexBox from '../../components/flexbox' 
@@ -13,8 +13,11 @@ class GroupManage extends React.Component {
     render() {
         let flexContent = 
         <div style={felxContent}>
-            <Row gutter={25}>
+            <Row gutter={25} type="flex" align="middle">
                 <Col span={6}><SelectSearch/></Col>
+                <Col span={6}><SelectSearch/></Col>
+                <Col span={6}><SelectSearch/></Col>
+                <Col span={6} style={{paddingLeft:'40px'}}> <Button className='btnSearch'  icon="search">Search</Button></Col>
             </Row>
         </div>
         const container = {
@@ -36,5 +39,6 @@ module.exports = GroupManage
 const felxContent = {
     width: '100%',
     background: 'white',
+    padding:'20px'
 
 }

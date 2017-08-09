@@ -54,7 +54,7 @@ const container = {
 const felxBoxTitle = {
     width: '100%',
     background: 'white',
-    height: '42px',
+    height: '48px',
     font: '14px "微软雅黑" ',
-    lineHeight: '42px'
+    lineHeight: '48px'
 }
