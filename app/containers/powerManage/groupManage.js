@@ -10,17 +10,17 @@ class GroupManage extends React.Component {
         super(props, context)
     }
     render() {
+        let flexContent = <div>我是组件管理</div>
         const container = {
             width: '100%',
         }
         const conditionSearch = {
             width: '100%',
             background: 'white',
-            height: '200px'
         }
         return (
             <div style={container}>
-                <FlexBox/>
+                <FlexBox content = {flexContent}/>
              </div>
         )
     }
