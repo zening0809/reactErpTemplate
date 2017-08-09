@@ -10,7 +10,9 @@ class GroupManage extends React.Component {
         super(props, context)
     }
     render() {
-        let flexContent = <div>我是组件管理</div>
+        let flexContent = 
+              <div style={felxContent}>
+        </div>
         const container = {
             width: '100%',
         }
@@ -20,9 +22,15 @@ class GroupManage extends React.Component {
         }
         return (
             <div style={container}>
-                <FlexBox content = {flexContent}/>
+                <FlexBox  content = {flexContent}/>
              </div>
         )
     }
 }
 module.exports = GroupManage 
+
+const felxContent = {
+    width: '100%',
+    background: 'white',
+
+}
