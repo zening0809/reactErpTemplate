@@ -38,8 +38,7 @@ class Tables extends React.Component {
             selectedRowKeys: []
         });
     }
-    onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+    onSelectChange = (selectedRowKeys) => 
         this.setState({ selectedRowKeys });
     }
     setAgeSort = () => {
@@ -150,11 +149,11 @@ class Tables extends React.Component {
         }];
         return (
             <div>
-                <div className="table-operations">
-                    <Button onClick={this.addRow.bind(this)}>新建</Button>
-                    <Button onClick={this.delCouple.bind(this)}>删除</Button>
+                <div className="table-operations" type="flex" align="middle" style={{marginTop:'25px',height:'50px',background:'white',lineHeight:'50px'}}>
+                    <Button className='btnNew' style={{marginLeft:'24px'}}  icon="plus" onClick={this.addRow.bind(this)}>新建</Button>
+                    <Button className='btnDle' style={{marginLeft:'15px'}} icon="delete" onClick={this.delCouple.bind(this)}>删除</Button>
                 </div>
-                <Table columns={columns} rowSelection={rowSelection} dataSource={this.state.data} onChange={this.handleChange} />
+                <Table style={{background:'white'}} columns={columns} rowSelection={rowSelection} dataSource={this.state.data} onChange={this.handleChange} />
             </div>
         );
     }

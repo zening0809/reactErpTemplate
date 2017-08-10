@@ -62,7 +62,7 @@ class Home extends React.Component {
                         </Menu>
                     </Sider>
                     <Layout>
-                        <Content style={{ margin: '25px' }}>
+                        <Content style={{ padding: '30px',overflow:'auto' }}>
                                 {this.props.children}
                         </Content>
                         <Footer style={{ textAlign: 'center',background:'white' }}>
