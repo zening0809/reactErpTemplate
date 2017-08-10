@@ -6,6 +6,12 @@ class Tables extends React.Component {
     state = {
         filteredInfo: null,
         sortedInfo: null,
+        data: this.props.data,
+        tableTitle : this.props.tableTitle,
+        keys : Object.keys(this.props.data[0]).splice(1)
+    };
+
+    static defaultProps = {
         data: [{
             key: '1',
             name: 'John Brown',
@@ -26,11 +32,8 @@ class Tables extends React.Component {
             name: 'Jim Red',
             age: 32,
             address: 'London No. 2 Lake Park',
-        }]
-    };
-
-    static defaultProps = {
-
+        }],
+        tableTitle : ['name', 'age', 'adress']
     }
     handleChange = (pagination, filters, sorter) => {
         this.setState({
@@ -38,7 +41,7 @@ class Tables extends React.Component {
             selectedRowKeys: []
         });
     }
-    onSelectChange = (selectedRowKeys) => 
+    onSelectChange = (selectedRowKeys) => {
         this.setState({ selectedRowKeys });
     }
     setAgeSort = () => {
@@ -50,9 +53,9 @@ class Tables extends React.Component {
         });
     }
     addRow = () => {
-        let { data } = this.state ;
+        let { data } = this.state;
 
-        let lastKey = data.length - 1 >= 0 ?Number((data[data.length - 1])['key']) + 1: 1;
+        let lastKey = data.length - 1 >= 0 ? Number((data[data.length - 1])['key']) + 1 : 1;
         data.push({
             key: String(lastKey),
             name: 'Jim Red',
@@ -63,21 +66,21 @@ class Tables extends React.Component {
     }
     delRow = (index) => {
         let { data } = this.state;
-        data.splice(index,1)
+        data.splice(index, 1)
         this.setState({ data: data })
     }
-    delCouple = () =>{
-         let surviveArr = [] ; 
-         let { data, selectedRowKeys} = this.state ;
-         data.forEach((item, index)=>{
-              if (selectedRowKeys.indexOf(item['key']) == -1)  surviveArr.push(item);
-         })
+    delCouple = () => {
+        let surviveArr = [];
+        let { data, selectedRowKeys } = this.state;
+        data.forEach((item, index) => {
+            if (selectedRowKeys.indexOf(item['key']) == -1) surviveArr.push(item);
+        })
         selectedRowKeys = []
-        this.setState({ data: surviveArr ,selectedRowKeys : selectedRowKeys})
-        
+        this.setState({ data: surviveArr, selectedRowKeys: selectedRowKeys })
+
     }
     render() {
-        let { sortedInfo, selectedRowKeys } = this.state;
+        let { sortedInfo, selectedRowKeys, data } = this.state;
         sortedInfo = sortedInfo || {};
         const rowSelection = {
             selectedRowKeys,
@@ -111,25 +114,21 @@ class Tables extends React.Component {
             }],
             onSelection: this.onSelection,
         };
-        const columns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            sorter: (a, b) => a.name.length - b.name.length,
-            sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
-        }, {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-            sorter: (a, b) => a.age - b.age,
-            sortOrder: sortedInfo.columnKey === 'age' && sortedInfo.order,
-        }, {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-            sorter: (a, b) => a.address.length - b.address.length,
-            sortOrder: sortedInfo.columnKey === 'address' && sortedInfo.order,
-        }, {
+        let columns = [];
+        let columnsTitle = this.state.tableTitle;
+        let columnsKey = [];
+
+        columnsKey = this.state.keys;
+        columnsKey.forEach((item, index) => {
+            columns.push({
+                title: columnsTitle[index],
+                dataIndex: item,
+                key: item,
+                sorter: (a, b) => a[item].length - b[item].length,
+                sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order
+            })
+        })
+        let actionObj = {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
@@ -145,15 +144,16 @@ class Tables extends React.Component {
                         <a href="#">Delete</a>
                     </Popconfirm>
                 </div>
-                ),
-        }];
+            ),
+        }
+        columns.push(actionObj);
         return (
             <div>
-                <div className="table-operations" type="flex" align="middle" style={{marginTop:'25px',height:'50px',background:'white',lineHeight:'50px'}}>
-                    <Button className='btnNew' style={{marginLeft:'24px'}}  icon="plus" onClick={this.addRow.bind(this)}>新建</Button>
-                    <Button className='btnDle' style={{marginLeft:'15px'}} icon="delete" onClick={this.delCouple.bind(this)}>删除</Button>
+                <div className="table-operations" style={{ marginTop: '25px', height: '50px', background: 'white', lineHeight: '50px' }}>
+                    <Button className='btnNew' style={{ marginLeft: '24px' }} icon="plus" onClick={this.addRow.bind(this)}>新建</Button>
+                    <Button className='btnDle' style={{ marginLeft: '15px' }} icon="delete" onClick={this.delCouple.bind(this)}>删除</Button>
                 </div>
-                <Table style={{background:'white'}} columns={columns} rowSelection={rowSelection} dataSource={this.state.data} onChange={this.handleChange} />
+                <Table style={{ background: 'white' }} columns={columns} rowSelection={rowSelection} dataSource={this.state.data} onChange={this.handleChange} />
             </div>
         );
     }
