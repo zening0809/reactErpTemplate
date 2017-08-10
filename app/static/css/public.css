@@ -52,3 +52,18 @@
     color: white;
     border:none;    
 }
+.shadeIcon {
+    width: 24px;
+    height: 24px;
+    float: right;
+    transition: all .3s;
+    font: 16px '微软雅黑';
+    font-weight: 700;
+    margin-top: 12px;
+    margin-right: 10px;
+    cursor:pointer;
+}
+.shadeIcon:hover{
+    color: #f2f3f5;
+     font: 18px '微软雅黑';
+}
