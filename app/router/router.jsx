@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Router, Route, Link, Redirect, hashHistory, browserHistory, IndexRoute } from 'react-router'
 
-import Login from '../containers/login/login'
+import Login from '../containers/login/LoginForm'
 import Home from '../containers/home/home'
 
 
