@@ -5,6 +5,7 @@ import { Row, Col, Button} from 'antd';
 //引入组件
 import FlexBox from '../../components/flexbox' 
 import SelectSearch from '../../components/select' 
+import Tables from '../../components/table' 
 
 class GroupManage extends React.Component {
     constructor(props, context) {
@@ -30,6 +31,7 @@ class GroupManage extends React.Component {
         return (
             <div style={container}>
                 <FlexBox  content = {flexContent}/>
+                <Tables></Tables>
              </div>
         )
     }

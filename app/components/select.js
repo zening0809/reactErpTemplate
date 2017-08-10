@@ -13,10 +13,10 @@ class SelectSearch extends React.Component {
     static defaultProps = {
         title: '',
         optionArr: [
-            { id: 0, value: 'jack' },
-            { id: 1, value: 'lingling' },
-            { id: 2, value: 'daming' },
-            { id: 3, value: 'Amy' }
+            { id: '0', value: 'jack' },
+            { id: '1', value: 'lingling' },
+            { id: '2', value: 'daming' },
+            { id: '3', value: 'Amy' }
         ],
         cueWords: '请选择',
         label: '我是label'
@@ -40,7 +40,7 @@ class SelectSearch extends React.Component {
                         >
                         {
                             this.props.optionArr.map(function (item) {
-                                return(<Option value={item.id}>{item.value}</Option>
+                                return(<Option key={item.id} value={item.id}>{item.value}</Option>
                                 )
                                 
                             })
