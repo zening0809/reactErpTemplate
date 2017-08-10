@@ -1,70 +1,47 @@
-import React from 'react'
-import { Table, Input, Icon, Button, Popconfirm } from 'antd';
+import React from 'react';
+import { Table, Button, Icon, Row, Popconfirm } from 'antd';
 
-
-const data = [{
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-}, {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-}, {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-}, {
-    key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
-}];
-
-let dataKeyArr = (Object.keys(data[0]).splice(1));
-let tableHead = ['姓名', '年龄', '地址'];
-let columns = [];
-
-console.log(dataKeyArr);
 
 class Tables extends React.Component {
     state = {
         filteredInfo: null,
         sortedInfo: null,
+        data: [{
+            key: '1',
+            name: 'John Brown',
+            age: 32,
+            address: 'New York No. 1 Lake Park',
+        }, {
+            key: '2',
+            name: 'Jim Green',
+            age: 42,
+            address: 'London No. 1 Lake Park',
+        }, {
+            key: '3',
+            name: 'Joe Black',
+            age: 32,
+            address: 'Sidney No. 1 Lake Park',
+        }, {
+            key: '4',
+            name: 'Jim Red',
+            age: 32,
+            address: 'London No. 2 Lake Park',
+        }]
     };
-    columnsAction(filteredInfo,sortedInfo) {
-        dataKeyArr.forEach((item, index) => {
-            columns.push(
-                {
-                    title: tableHead[index],
-                    dataIndex: dataKeyArr[index],
-                    key: dataKeyArr[index],
-                    filters: [
-                        { text: 'Joe', value: 'Joe' },
-                        { text: 'Jim', value: 'Jim' },
-                    ],
-                    filteredValue: filteredInfo[dataKeyArr[index]] || null,
-                    onFilter: (value, record) => record[dataKeyArr[index]].includes(value),
-                    sorter: (a, b) => a[dataKeyArr[index]] - b[dataKeyArr[index]],
-                    sortOrder: sortedInfo.columnKey === dataKeyArr[index] && sortedInfo.order,
-                }
-            )
-        })
-         console.log(columns);
-        return columns ;
-       
+
+    static defaultProps = {
+
     }
     handleChange = (pagination, filters, sorter) => {
-        console.log('Various parameters', pagination, filters, sorter);
         this.setState({
-            filteredInfo: filters,
             sortedInfo: sorter,
+            selectedRowKeys: []
         });
     }
-
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    }
     setAgeSort = () => {
         this.setState({
             sortedInfo: {
@@ -73,22 +50,113 @@ class Tables extends React.Component {
             },
         });
     }
+    addRow = () => {
+        let { data } = this.state ;
+
+        let lastKey = data.length - 1 >= 0 ?Number((data[data.length - 1])['key']) + 1: 1;
+        data.push({
+            key: String(lastKey),
+            name: 'Jim Red',
+            age: 32,
+            address: 'London No. 2 Lake Park',
+        })
+        this.setState({ data: data })
+    }
+    delRow = (index) => {
+        let { data } = this.state;
+        data.splice(index,1)
+        this.setState({ data: data })
+    }
+    delCouple = () =>{
+         let surviveArr = [] ; 
+         let { data, selectedRowKeys} = this.state ;
+         data.forEach((item, index)=>{
+              if (selectedRowKeys.indexOf(item['key']) == -1)  surviveArr.push(item);
+         })
+        selectedRowKeys = []
+        this.setState({ data: surviveArr ,selectedRowKeys : selectedRowKeys})
+        
+    }
     render() {
-        let { sortedInfo, filteredInfo } = this.state;
+        let { sortedInfo, selectedRowKeys } = this.state;
         sortedInfo = sortedInfo || {};
-        filteredInfo = filteredInfo || {};
-        columns = this.columnsAction(filteredInfo,sortedInfo);
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+            selections: [{
+                key: 'odd',
+                text: '偶数行选择',
+                onSelect: (changableRowKeys) => {
+                    let newSelectedRowKeys = [];
+                    newSelectedRowKeys = changableRowKeys.filter((key, index) => {
+                        if (index % 2 !== 0) {
+                            return false;
+                        }
+                        return true;
+                    });
+                    this.setState({ selectedRowKeys: newSelectedRowKeys });
+                },
+            }, {
+                key: 'even',
+                text: '奇数行选择',
+                onSelect: (changableRowKeys) => {
+                    let newSelectedRowKeys = [];
+                    newSelectedRowKeys = changableRowKeys.filter((key, index) => {
+                        if (index % 2 !== 0) {
+                            return true;
+                        }
+                        return false;
+                    });
+                    this.setState({ selectedRowKeys: newSelectedRowKeys });
+                },
+            }],
+            onSelection: this.onSelection,
+        };
+        const columns = [{
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            sorter: (a, b) => a.name.length - b.name.length,
+            sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+        }, {
+            title: 'Age',
+            dataIndex: 'age',
+            key: 'age',
+            sorter: (a, b) => a.age - b.age,
+            sortOrder: sortedInfo.columnKey === 'age' && sortedInfo.order,
+        }, {
+            title: 'Address',
+            dataIndex: 'address',
+            key: 'address',
+            sorter: (a, b) => a.address.length - b.address.length,
+            sortOrder: sortedInfo.columnKey === 'address' && sortedInfo.order,
+        }, {
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            render: (text, record, index) => (
+                <div>
+                    <span>
+                        <Icon type="down" /> <a href="#">修改</a>
+                    </span>
+                    <span>
+                        <Icon type="down" /><a href="#">查看</a>
+                    </span>
+                    <Popconfirm title="Sure to delete?" onConfirm={() => this.delRow(index)}>
+                        <a href="#">Delete</a>
+                    </Popconfirm>
+                </div>
+                ),
+        }];
         return (
             <div>
                 <div className="table-operations">
-                    <Button >新建</Button>
-                    <Button >删除</Button>
+                    <Button onClick={this.addRow.bind(this)}>新建</Button>
+                    <Button onClick={this.delCouple.bind(this)}>删除</Button>
                 </div>
-                <Table columns={columns} dataSource={data} onChange={this.handleChange} />
+                <Table columns={columns} rowSelection={rowSelection} dataSource={this.state.data} onChange={this.handleChange} />
             </div>
         );
     }
 }
-
-
 module.exports = Tables
