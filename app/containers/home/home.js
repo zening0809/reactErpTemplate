@@ -4,7 +4,7 @@ import '../../static/css/home.css'
 
 import { Layout, Menu, Icon } from 'antd'
 
-import ShadePage from '../../components/shade'
+
 // 引入遮罩层
 
 const SubMenu = Menu.SubMenu
@@ -25,8 +25,7 @@ class Home extends React.Component {
                     { title: '规则管理', id: 3, link: '/home/rulemanage' },
                     { title: '角色管理', id: 4, link: '/home/usermanage' },
                 ]
-            },
-            shadeState: true
+            }
         }
     }
     toggleCollapsed = () => {
@@ -35,17 +34,13 @@ class Home extends React.Component {
         });
     }
 
-    shadeCloseAction = () => {
+
+    shadeTemplate = (template) => {
         this.setState({
-            shadeState: false
-        });
-    };
-
-
+            shadeTemplate: template
+        }); 
+    }
     render() {
-        let { shadeState } = this.state;
-        let stateEle;
-        shadeState ? stateEle = <ShadePage callBack={this.shadeCloseAction}></ShadePage> : stateEle = <div></div>
         return (
             <Layout className="layout" style={{ height: '100%', background: this.context.color }}>
                 <Header className="header">
@@ -87,7 +82,6 @@ class Home extends React.Component {
 			             </Footer>
                     </Layout>
                 </Layout>
-                {stateEle}
             </Layout>
         )
     }

@@ -7,6 +7,7 @@ import './static/css/base.css'
 import './static/css/public.css'
 
 
+
 // 组件渲染到真实dom节点
 render(
 	<Routers/>,

@@ -7,9 +7,14 @@ import FlexBox from '../../components/flexbox'
 import SelectSearch from '../../components/select' 
 import Tables from '../../components/table' 
 
+import GroupTemplate from './groupTemplate' 
+
 class GroupManage extends React.Component {
     constructor(props, context) {
         super(props, context)
+    }
+    state = {
+        groupTemplate : <GroupTemplate/>
     }
     render() {
         let flexContent = 
@@ -31,7 +36,7 @@ class GroupManage extends React.Component {
         return (
             <div style={container}>
                 <FlexBox  content = {flexContent}/>
-                <Tables></Tables>
+                <Tables template = {this.state.groupTemplate}></Tables>
              </div>
         )
     }
