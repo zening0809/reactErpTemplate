@@ -42,6 +42,8 @@ class Shade extends React.Component {
         let IconScreen;
         ismaxScreen ? IconScreen = <Icon onClick={this.normalScreen} className='shadeIcon' style={{ marginRight: '2px' }} type="shrink" />
             : IconScreen = <Icon onClick={this.maxScreen} className='shadeIcon' style={{ marginRight: '2px' }} type="arrows-alt" />
+        let banClickShade 
+       this.props.banClick ? banClickShade =  <div style={banClick}></div> : <div></div>
         return (
             <div style={shadeContainer} onClick={this.closeShade}>
                 <Row id="shadeContainer" style={{ width: '100%', height: '100%' }} type="flex" justify="center" align="middle">
@@ -53,9 +55,12 @@ class Shade extends React.Component {
                         </div>
                         <div style={shadePropsContent}>
                         {this.props.template}
+                        {banClickShade}
+                          
                         </div>
-                    </div>
-                    
+                       
+                    </div>   
+                                   
                 </Row>
             </div>
         )
@@ -96,8 +101,16 @@ const shadeTitleText = {
 }
 const shadePropsContent = {
     width: '100%',
-    minHeight:'552px',
+    height:'552px',
     background: 'white',
     overflow: 'auto',
-    paddingTop:'30px'
+    paddingTop:'42px'
+}
+const banClick = {
+    width: '46%',
+    height: '100%',
+    background: 'transparent',
+    zIndex: '999',
+    position: 'fixed',
+    top: '0',
 }

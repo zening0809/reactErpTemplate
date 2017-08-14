@@ -8,40 +8,69 @@ class Tables extends React.Component {
         filteredInfo: null,
         sortedInfo: null,
         data: this.props.data,
-        tableTitle : this.props.tableTitle,
-        keys : Object.keys(this.props.data[0]).splice(1),
-        shadeStatues : false
+        tableTitle: this.props.tableTitle,
+        keys: ['nickname', 'category', 'adress', 'phone', 'email'],
+        shadeStatues: false,
+        editItem : -1
     };
-
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.formObj !== this.props.formObj) {
+            let { data } = this.state;
+            console.log(this.state.editItem);
+            if(this.state.editItem === -1){
+               let lastKey = data.length - 1 >= 0 ? Number((data[data.length - 1])['key']) + 1 : 1;
+                nextProps.formObj['key'] = lastKey;
+                data.push(nextProps.formObj) 
+            }else{
+                let currKey = data[this.state.editItem]['key'];
+                nextProps.formObj['key'] =  currKey ;
+                data[this.state.editItem] = nextProps.formObj
+            }
+            this.setState({ data: data })
+        }
+        if (nextProps.shadeProps !== this.props.shadeProps) {
+            this.shadeStatuesAction();
+        }
+    }
     static defaultProps = {
         data: [{
             key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
+            nickname: "二位哇若",
+            category: "china",
+            adress: "爱笑的",
+            phone: "13717879138",
+            email: "2@qq.com",
+
+
+            remark: "dada",
+            website: "web.c.com",
         }, {
             key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
+            nickname: "dxxc",
+            category: "china",
+            adress: "北京",
+            phone: "13888888888",
+            email: "752671125@qq.com",
+            remark: "dada",
+            website: "baidu.com",
         }, {
             key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-        }, {
-            key: '4',
-            name: 'Jim Red',
-            age: 32,
-            address: 'London No. 2 Lake Park',
+            nickname: "新浪",
+            category: "U.S.A",
+            adress: "香港",
+            phone: "1507891313",
+            remark: "这是备注信息",
+            website: "xinlang.com",
+            email: "ls@xinlang.com",
         }],
-        tableTitle : ['name', 'age', 'adress'],
-        template : <div>遮罩层模板内容</div>
+        tableTitle: ['组织名称', '类型', '地址', '电话', 'E-mail'],
+        template: <div>遮罩层模板内容</div>,
     }
     handleChange = (pagination, filters, sorter) => {
         this.setState({
             sortedInfo: sorter,
-            selectedRowKeys: []
+            selectedRowKeys: [],
+            banClick: false
         });
     }
     onSelectChange = (selectedRowKeys) => {
@@ -56,23 +85,29 @@ class Tables extends React.Component {
         });
     }
     addShade = () => {
-        // let { data } = this.state;
-        // let lastKey = data.length - 1 >= 0 ? Number((data[data.length - 1])['key']) + 1 : 1;
-        // data.push({
-        //     key: String(lastKey),
-        //     name: 'Jim Red',
-        //     age: 32,
-        //     address: 'London No. 2 Lake Park',
-        // })
-        // this.setState({ data: data })
+         this.props.renderObject({});   
         this.setState({
-            shadeStatues : !this.state.shadeStatues
+            shadeStatues: !this.state.shadeStatues,
+            editItem : -1,
+            banClick: false
         });
     }
-    editShade = () => {
-        console.log(1111);
-         this.setState({
-            shadeStatues : !this.state.shadeStatues
+    editShade = (index) => {
+        
+        let formSelectObj =  this.state.data[index] ;
+        this.props.renderObject(formSelectObj);    
+        this.setState({
+            shadeStatues: !this.state.shadeStatues,
+            editItem : index,
+            banClick: false
+        });
+    }
+    viewShade = (index) => {
+        let formSelectObj =  this.state.data[index] ;
+        this.props.renderObject(formSelectObj);    
+        this.setState({
+            shadeStatues: !this.state.shadeStatues,
+             banClick: true
         });
     }
     delRow = (index) => {
@@ -90,17 +125,17 @@ class Tables extends React.Component {
         this.setState({ data: surviveArr, selectedRowKeys: selectedRowKeys })
 
     }
-    
+
     shadeStatuesAction = () => {
         this.setState({
-            shadeStatues : !this.state.shadeStatues
+            shadeStatues: !this.state.shadeStatues
         });
     };
 
     render() {
-        let {shadeStatues} = this.state ;
-        let shadeEle ;
-        shadeStatues ? shadeEle = <ShadePage shadeChange = {this.shadeStatuesAction}  template={this.props.template} /> : shadeEle = <div></div>
+        let { shadeStatues } = this.state;
+        let shadeEle;
+        shadeStatues ? shadeEle = <ShadePage banClick = {this.state.banClick}  shadeChange={this.shadeStatuesAction} template={this.props.template} /> : shadeEle = <div></div>
         let { sortedInfo, selectedRowKeys, data } = this.state;
         sortedInfo = sortedInfo || {};
         const rowSelection = {
@@ -154,15 +189,15 @@ class Tables extends React.Component {
             dataIndex: 'action',
             key: 'action',
             render: (text, record, index) => {
-              return  <div>
-                    <span style={{cursor:'pointer', color:'#575048'}} onClick = {() => this.editShade(index)}>
+                return <div>
+                    <span style={{ cursor: 'pointer', color: '#575048' }} onClick={() => this.editShade(index)}>
                         <Icon type="edit" /> 修改
                     </span>
-                    <span style={{cursor:'pointer', color:'#fdb241', marginLeft:'8px'}}>
-                      <Icon type="search" /> 查看
+                    <span style={{ cursor: 'pointer', color: '#fdb241', marginLeft: '8px' }} onClick={() => this.viewShade(index)}>
+                        <Icon type="search" /> 查看
                     </span>
-                    <Popconfirm  title="Sure to delete?" onConfirm={() => this.delRow(index)}>
-                        <Icon style={{cursor:'pointer', color:'#eb6c4b',marginLeft:'10px'}} type="delete"/><span style={{cursor:'pointer', color:'#eb6c4b'}}>&nbsp;删除</span>
+                    <Popconfirm title="Sure to delete?" onConfirm={() => this.delRow(index)}>
+                        <Icon style={{ cursor: 'pointer', color: '#eb6c4b', marginLeft: '10px' }} type="delete" /><span style={{ cursor: 'pointer', color: '#eb6c4b' }}>&nbsp;删除</span>
                     </Popconfirm>
                 </div>
             }
@@ -175,9 +210,11 @@ class Tables extends React.Component {
                     <Button className='btnDle' style={{ marginLeft: '15px' }} icon="delete" onClick={this.delCouple.bind(this)}>删除</Button>
                 </div>
                 <Table style={{ background: 'white' }} columns={columns} rowSelection={rowSelection} dataSource={this.state.data} onChange={this.handleChange} />
-                {shadeEle}
+                {shadeEle} 
             </div>
         );
     }
 }
 module.exports = Tables
+
+

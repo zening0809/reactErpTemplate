@@ -24,7 +24,10 @@
     background: #fdb241;
     border-color: #fdb241 ; 
 }
-
+.ant-btn-primary:hover, .ant-btn-primary:focus, .ant-btn-primary:active, .ant-btn-primary.active{
+    background: #ff973b;
+    border-color: #ff973b ; 
+}
 .btnSearch:hover, .btnSearch:focus, .btnSearch:active, .btnSearch.active{
     background: #ba8e6e;
     color: white;
@@ -67,3 +70,6 @@
     color: #f2f3f5;
      font: 18px '微软雅黑';
 }
+
+textarea::-webkit-scrollbar {display:none}
+div::-webkit-scrollbar {display:none}

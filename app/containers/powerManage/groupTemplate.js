@@ -3,18 +3,31 @@ import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Butto
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
-
-
+const { TextArea } = Input;
+const PropTypes = require('prop-types');
 class GroupTemplate extends React.Component {
+    constructor(props, context) {
+        super(props, context)
+    }
+
+    static contextTypes = {
+         getFormVal : PropTypes.func,
+         renderObj: PropTypes.object
+    }
     state = {
         confirmDirty: false,
         autoCompleteResult: [],
+        renderObj : this.context.renderObj
     };
+      
+
     handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(); 
         this.props.form.validateFieldsAndScroll((err, values) => {
+            this.context.getFormVal(values)
             if (!err) {
-                console.log('Received values of form: ', values);
+                // (values)
+                // console.log('Received values of form: ', values);
             }
         });
     }
@@ -89,20 +102,65 @@ class GroupTemplate extends React.Component {
 
         return (
             <Form onSubmit={this.handleSubmit}>
-                <FormItem
+                  <FormItem
                     {...formItemLayout}
-                    label="Select"
+                    label={(
+                        <span>
+                            组织名称&nbsp;
+              <Tooltip title="please input the group name of your expect ">
+                                <Icon type="question-circle-o" />
+                            </Tooltip>
+                        </span>
+                    )}
                     hasFeedback
                 >
-                    {getFieldDecorator('select', {
+                    {getFieldDecorator('nickname', {
+                        rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }]
+                        ,initialValue:this.state.renderObj.nickname || ''})(
+                        <Input />
+                        )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="类别"
+                    hasFeedback
+                >
+                    {getFieldDecorator('category', {
                         rules: [
                             { required: true, message: 'Please select your country!' },
-                        ],
+                        ],initialValue:this.state.renderObj.category || ''
                     })(
                         <Select placeholder="Please select a country">
                             <Option value="china">China</Option>
                             <Option value="use">U.S.A</Option>
                         </Select>
+                        )}
+                </FormItem>
+                 <FormItem
+                    {...formItemLayout}
+                    label={(
+                        <span>
+                            地址&nbsp;
+                        </span>
+                    )}
+                    hasFeedback
+                >
+                    {getFieldDecorator('adress', {
+                        rules: [{ required: true, message: 'Please input your adress!'}],
+                        initialValue:this.state.renderObj.adress || ''
+                    })(
+                        <Input />
+                        )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="电话"
+                >
+                    {getFieldDecorator('phone', {
+                        rules: [{ required: true, message: 'Please input your phone number!' }],
+                         initialValue:this.state.renderObj.phone || ''
+                    })(
+                        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                         )}
                 </FormItem>
                 <FormItem
@@ -116,45 +174,18 @@ class GroupTemplate extends React.Component {
                         }, {
                             required: true, message: 'Please input your E-mail!',
                         }],
-                    })(
-                        <Input />
-                        )}
-                </FormItem>
-
-                <FormItem
-                    {...formItemLayout}
-                    label={(
-                        <span>
-                            Nickname&nbsp;
-              <Tooltip title="What do you want other to call you?">
-                                <Icon type="question-circle-o" />
-                            </Tooltip>
-                        </span>
-                    )}
-                    hasFeedback
-                >
-                    {getFieldDecorator('nickname', {
-                        rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+                        initialValue:this.state.renderObj.email || ''
                     })(
                         <Input />
                         )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Phone Number"
-                >
-                    {getFieldDecorator('phone', {
-                        rules: [{ required: true, message: 'Please input your phone number!' }],
-                    })(
-                        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-                        )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="Website"
+                    label="网站"
                 >
                     {getFieldDecorator('website', {
                         rules: [{ required: true, message: 'Please input website!' }],
+                        initialValue:this.state.renderObj.website || ''
                     })(
                         <AutoComplete
                             dataSource={websiteOptions}
@@ -167,30 +198,21 @@ class GroupTemplate extends React.Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Captcha"
-                    extra="We must make sure that your are a human."
+                    label="备注"
                 >
-                    <Row gutter={8}>
-                        <Col span={12}>
-                            {getFieldDecorator('captcha', {
-                                rules: [{ required: true, message: 'Please input the captcha you got!' }],
-                            })(
-                                <Input size="large" />
-                                )}
-                        </Col>
-                        <Col span={12}>
-                            <Button size="large">Get captcha</Button>
-                        </Col>
-                    </Row>
-                </FormItem>
-                <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
-                    {getFieldDecorator('agreement', {
-                        valuePropName: 'checked',
+                    {getFieldDecorator('remark', {
+                        rules: [{ required: true, message: 'Please input website!' }],
+                         initialValue:this.state.renderObj.remark || ''
                     })(
-                        <Checkbox>I have read the <a href="">agreement</a></Checkbox>
+                        <AutoComplete
+                            placeholder="remark"
+                        >
+                           <TextArea  style={{resize:'none',height:'80px'}}  rows={4} />
+                        </AutoComplete>
                         )}
                 </FormItem>
-                <FormItem {...tailFormItemLayout}>
+               
+                <FormItem {...tailFormItemLayout} style={{marginTop:'70px'}}>
                     <Button type="primary" htmlType="submit">Register</Button>
                 </FormItem>
             </Form>

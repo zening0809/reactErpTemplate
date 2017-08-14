@@ -27,9 +27,9 @@ class SelectSearch extends React.Component {
     }
     render() {
         return (
-            <Row gutter={15} type="flex" justify="center" align="middle" style={{height:'48px'}}>
-                <Col span={10}><span style={{display:'inline-block',width:'100%',textAlign:'center',fontSize:'14px',color:'#929aab'}}>{this.props.label}</span></Col>
-                <Col span={14} >
+            <Row gutter={0} type="flex" justify="center" align="middle" style={{height:'48px'}}>
+                <Col span={12}><span style={{display:'inline-block',width:'100%',textAlign:'center',fontSize:'14px',color:'#929aab'}}>{this.props.label}</span></Col>
+                <Col span={12} >
                     <Select
                            style={{width:'100%'}}
                             showSearch
