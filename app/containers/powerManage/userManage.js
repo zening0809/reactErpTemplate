@@ -6,7 +6,7 @@ class UserManage extends React.Component {
     }
     render() {
         return (
-            <Link to='/home'>我是用户管理, 要回到组织管理了</Link>
+            <Link to='/home/rolemanage'>我是账号管理, 要回到角色管理了</Link>
         )
     }
 }

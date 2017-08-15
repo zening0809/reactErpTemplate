@@ -6,7 +6,7 @@ class RuleManage extends React.Component {
     }
     render() {
         return (
-            <Link to='/home/userManage'>我是规则管理，要去用户管理</Link>
+            <Link to='/home'>我是规则管理，要去组织管理</Link>
         )
     }
 }

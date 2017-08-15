@@ -21,9 +21,9 @@ class Home extends React.Component {
                 title: '权限管理',
                 powerArr: [
                     { title: '组织管理', id: 1, link: '/home' },
-                    { title: '权限管理', id: 2, link: '/home/rolemanage' },
-                    { title: '规则管理', id: 3, link: '/home/rulemanage' },
-                    { title: '角色管理', id: 4, link: '/home/usermanage' },
+                    { title: '账号管理', id: 2, link: '/home/usermanage' },
+                    { title: '角色管理', id: 3, link: '/home/rolemanage' },
+                    { title: '规则管理', id: 4, link: '/home/rulemanage' },
                 ]
             }
         }
