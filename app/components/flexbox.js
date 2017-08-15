@@ -23,21 +23,21 @@ class FlexBox extends React.Component {
         }
     }
     render() {
-        let felxBox;
+        let flexBox;
         if (this.state.boxState) {
-            felxBox = this.props.content
+            flexBox = this.props.content
         } else {
-            felxBox = <div></div>
+            flexBox = <div></div>
         }
         return (
             <div style={container}>
                 <Row>
                     <Col span={24}>
-                        <div style={felxBoxTitle}>
+                        <div style={flexBoxTitle}>
                             <span style={{ marginLeft: '25px' }}>{this.props.title}</span>
                             <Icon type={this.state.icon} onClick={this.flexContentToggle.bind(this)} style={{ fontSize: 16, color: '#c3a279', marginLeft: '10px', cursor: 'pointer' }} />
                         </div>
-                        {felxBox}
+                        {flexBox}
                     </Col>
                 </Row>
             </div>
@@ -51,7 +51,7 @@ module.exports = FlexBox
 const container = {
     width: '100%',
 }
-const felxBoxTitle = {
+const flexBoxTitle = {
     width: '100%',
     background: 'white',
     height: '48px',
