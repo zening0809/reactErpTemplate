@@ -214,7 +214,7 @@ class GroupTemplate extends React.Component {
                 </FormItem>
                
                 <FormItem {...tailFormItemLayout} style={{marginTop:'70px'}}>
-                    <Button type="primary" htmlType="submit">Register</Button>
+                    <Button type="primary" htmlType="submit">提交</Button>
                 </FormItem>
             </Form>
         );
