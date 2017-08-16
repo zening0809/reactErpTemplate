@@ -24,8 +24,9 @@ class GroupTemplate extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault(); 
         this.props.form.validateFieldsAndScroll((err, values) => {
-            this.context.getFormVal(values)
             if (!err) {
+                this.context.getFormVal(values)
+
                 // (values)
                 // console.log('Received values of form: ', values);
             }

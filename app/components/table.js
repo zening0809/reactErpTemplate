@@ -9,7 +9,7 @@ class Tables extends React.Component {
         sortedInfo: null,
         data: this.props.data,
         tableTitle: this.props.tableTitle,
-        keys: ['nickname', 'category', 'adress', 'phone', 'email'],
+        keys: this.props.keys,
         shadeStatues: false,
         editItem : -1
     };
@@ -65,6 +65,7 @@ class Tables extends React.Component {
         }],
         tableTitle: ['组织名称', '类型', '地址', '电话', 'E-mail'],
         template: <div>遮罩层模板内容</div>,
+        keys: ['nickname', 'category', 'adress', 'phone', 'email']
     }
     handleChange = (pagination, filters, sorter) => {
         this.setState({
