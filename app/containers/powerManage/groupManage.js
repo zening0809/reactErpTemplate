@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Link } from 'react-router'
 import { Row, Col, Button} from 'antd';
 
@@ -66,5 +65,4 @@ const felxContent = {
     width: '100%',
     background: 'white',
     padding:'20px'
-
 }

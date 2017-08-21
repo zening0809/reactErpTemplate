@@ -66,7 +66,9 @@ class Home extends React.Component {
                             <SubMenu key="sub0" title={this.state.powermanage.title}>
                                 {this.state.powermanage.powerArr.map(function (item) {
                                     return (
-                                        <Menu.Item style={{ fontSize: '14px', bacground: '#575048' }} key={item.id}><Link style={{ display: 'block' }} to={item.link}>{item.title}</Link></Menu.Item>
+                                        <Menu.Item style={{ fontSize: '14px', bacground: '#575048' }} key={item.id}>
+                                            <Link style={{ display: 'block' }} to={item.link}>{item.title}</Link>
+                                        </Menu.Item>
                                     )
                                 })
                                 }
