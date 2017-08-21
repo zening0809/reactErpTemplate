@@ -43,7 +43,7 @@ class Shade extends React.Component {
         ismaxScreen ? IconScreen = <Icon onClick={this.normalScreen} className='shadeIcon' style={{ marginRight: '2px' }} type="shrink" />
             : IconScreen = <Icon onClick={this.maxScreen} className='shadeIcon' style={{ marginRight: '2px' }} type="arrows-alt" />
         let banClickShade 
-       this.props.banClick ? banClickShade =  <div style={banClick}></div> : <div></div>
+        this.props.banClick ? banClickShade =  <div style={banClick}></div> : <div></div>
         return (
             <div style={shadeContainer} onClick={this.closeShade}>
                 <Row id="shadeContainer" style={{ width: '100%', height: '100%' }} type="flex" justify="center" align="middle">

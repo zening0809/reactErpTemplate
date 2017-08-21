@@ -14,6 +14,7 @@ class Tables extends React.Component {
         editItem : -1
     };
     componentWillReceiveProps(nextProps) {
+        console.log('props改变了')
         if (nextProps.formObj !== this.props.formObj) {
             let { data } = this.state;
             console.log(this.state.editItem);
@@ -40,8 +41,6 @@ class Tables extends React.Component {
             adress: "爱笑的",
             phone: "13717879138",
             email: "2@qq.com",
-
-
             remark: "dada",
             website: "web.c.com",
         }, {
@@ -86,17 +85,16 @@ class Tables extends React.Component {
         });
     }
     addShade = () => {
-         this.props.renderObject({});   
+        this.props.renderObject({});   
         this.setState({
             shadeStatues: !this.state.shadeStatues,
             editItem : -1,
             banClick: false
         });
     }
-    editShade = (index) => {
-        
-        let formSelectObj =  this.state.data[index] ;
-        this.props.renderObject(formSelectObj);    
+    editShade = (index) => {        
+        let formSelectObj =  this.state.data[index];
+        this.props.renderObject(formSelectObj);
         this.setState({
             shadeStatues: !this.state.shadeStatues,
             editItem : index,
@@ -108,7 +106,7 @@ class Tables extends React.Component {
         this.props.renderObject(formSelectObj);    
         this.setState({
             shadeStatues: !this.state.shadeStatues,
-             banClick: true
+            banClick: true
         });
     }
     delRow = (index) => {
@@ -144,7 +142,7 @@ class Tables extends React.Component {
             onChange: this.onSelectChange,
             selections: [{
                 key: 'odd',
-                text: '偶数行选择',
+                text: '奇数行选择',
                 onSelect: (changableRowKeys) => {
                     let newSelectedRowKeys = [];
                     newSelectedRowKeys = changableRowKeys.filter((key, index) => {
@@ -157,7 +155,7 @@ class Tables extends React.Component {
                 },
             }, {
                 key: 'even',
-                text: '奇数行选择',
+                text: '偶数行选择',
                 onSelect: (changableRowKeys) => {
                     let newSelectedRowKeys = [];
                     newSelectedRowKeys = changableRowKeys.filter((key, index) => {
@@ -181,8 +179,7 @@ class Tables extends React.Component {
                 title: columnsTitle[index],
                 dataIndex: item,
                 key: item,
-                sorter: (a, b) => a[item].length - b[item].length,
-                sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order
+                sorter: (a, b) => a[item].length - b[item].length
             })
         })
         let actionObj = {

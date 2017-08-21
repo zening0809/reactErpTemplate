@@ -11,18 +11,18 @@ class GroupTemplate extends React.Component {
     }
 
     static contextTypes = {
-         getFormVal : PropTypes.func,
-         renderObj: PropTypes.object
+        getFormVal: PropTypes.func,
+        renderObj: PropTypes.object
     }
     state = {
         confirmDirty: false,
         autoCompleteResult: [],
-        renderObj : this.context.renderObj
+        renderObj: this.context.renderObj
     };
-      
+
 
     handleSubmit = (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 this.context.getFormVal(values)
@@ -103,12 +103,12 @@ class GroupTemplate extends React.Component {
 
         return (
             <Form onSubmit={this.handleSubmit}>
-                  <FormItem
+                <FormItem
                     {...formItemLayout}
                     label={(
                         <span>
                             组织名称&nbsp;
-              <Tooltip title="please input the group name of your expect ">
+                            <Tooltip title="please input the group name of your expect ">
                                 <Icon type="question-circle-o" />
                             </Tooltip>
                         </span>
@@ -117,7 +117,8 @@ class GroupTemplate extends React.Component {
                 >
                     {getFieldDecorator('nickname', {
                         rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }]
-                        ,initialValue:this.state.renderObj.nickname || ''})(
+                        , initialValue: this.state.renderObj.nickname || ''
+                    })(
                         <Input />
                         )}
                 </FormItem>
@@ -129,7 +130,7 @@ class GroupTemplate extends React.Component {
                     {getFieldDecorator('category', {
                         rules: [
                             { required: true, message: 'Please select your country!' },
-                        ],initialValue:this.state.renderObj.category || ''
+                        ], initialValue: this.state.renderObj.category || ''
                     })(
                         <Select placeholder="Please select a country">
                             <Option value="china">China</Option>
@@ -137,7 +138,7 @@ class GroupTemplate extends React.Component {
                         </Select>
                         )}
                 </FormItem>
-                 <FormItem
+                <FormItem
                     {...formItemLayout}
                     label={(
                         <span>
@@ -147,8 +148,8 @@ class GroupTemplate extends React.Component {
                     hasFeedback
                 >
                     {getFieldDecorator('adress', {
-                        rules: [{ required: true, message: 'Please input your adress!'}],
-                        initialValue:this.state.renderObj.adress || ''
+                        rules: [{ required: true, message: 'Please input your adress!' }],
+                        initialValue: this.state.renderObj.adress || ''
                     })(
                         <Input />
                         )}
@@ -159,7 +160,7 @@ class GroupTemplate extends React.Component {
                 >
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: 'Please input your phone number!' }],
-                         initialValue:this.state.renderObj.phone || ''
+                        initialValue: this.state.renderObj.phone || ''
                     })(
                         <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                         )}
@@ -175,7 +176,7 @@ class GroupTemplate extends React.Component {
                         }, {
                             required: true, message: 'Please input your E-mail!',
                         }],
-                        initialValue:this.state.renderObj.email || ''
+                        initialValue: this.state.renderObj.email || ''
                     })(
                         <Input />
                         )}
@@ -186,7 +187,7 @@ class GroupTemplate extends React.Component {
                 >
                     {getFieldDecorator('website', {
                         rules: [{ required: true, message: 'Please input website!' }],
-                        initialValue:this.state.renderObj.website || ''
+                        initialValue: this.state.renderObj.website || ''
                     })(
                         <AutoComplete
                             dataSource={websiteOptions}
@@ -203,17 +204,17 @@ class GroupTemplate extends React.Component {
                 >
                     {getFieldDecorator('remark', {
                         rules: [{ required: true, message: 'Please input website!' }],
-                         initialValue:this.state.renderObj.remark || ''
+                        initialValue: this.state.renderObj.remark || ''
                     })(
                         <AutoComplete
                             placeholder="remark"
                         >
-                           <TextArea  style={{resize:'none',height:'80px'}}  rows={4} />
+                            <TextArea style={{ resize: 'none', height: '80px' }} rows={4} />
                         </AutoComplete>
                         )}
                 </FormItem>
-               
-                <FormItem {...tailFormItemLayout} style={{marginTop:'70px'}}>
+
+                <FormItem {...tailFormItemLayout} style={{ marginTop: '70px' }}>
                     <Button type="primary" htmlType="submit">提交</Button>
                 </FormItem>
             </Form>
