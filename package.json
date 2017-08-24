@@ -8,7 +8,7 @@
     "dev": "webpack-dev-server --config webpack.develop.config.js --devtool eval --progress --colors --hot --content-base app",
     "publish": "webpack --config webpack.publish.config.js --progress --profile --colors"
   },
-  "author": "hushiking",
+  "author": "zening hushiking",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.22.1",
